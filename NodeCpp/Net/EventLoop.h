@@ -24,8 +24,22 @@
 # pragma once
 #endif
 
+#include <NodeCpp/Macros.h>
 
+namespace NodeCpp{
+    namespace Net {
 
+        class EventLoop
+        {
+        public:
+            EventLoop(void);
+            ~EventLoop(void);
 
+        private:
+            DISALLOW_COPY_AND_ASSIGN(EventLoop);
+        };
+
+    }
+}
 
 #endif // NODECPP_NET_EVENTLOOP_H_
