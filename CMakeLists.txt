@@ -82,9 +82,13 @@ set(NodeCpp_Net_SRC
   NodeCpp/Net/Event.h
   NodeCpp/Net/EventLoop.h
   NodeCpp/Net/Reactor.h
+  NodeCpp/Net/NetworkSession.h
+  NodeCpp/Net/TcpNetworkSession.h
   
   Src/Net/Event.cpp
   Src/Net/EventLoop.cpp
+  Src/Net/NetworkSession.cpp
+  Src/Net/TcpNetworkSession.cpp
 )
 if (WIN32)
 set(NodeCpp_Net_SRC

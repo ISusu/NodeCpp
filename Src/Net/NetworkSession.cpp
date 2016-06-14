@@ -17,22 +17,6 @@
  *
  *****************************************************************************/
 
-#ifndef NODECPP_NET_EVENT_H_
-#define NODECPP_NET_EVENT_H_
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-# pragma once
-#endif
 
-namespace NodeCpp{
-    namespace Net {
 
-        class Event
-        {
-
-        };
-
-    }
-}
-
-#endif // NODECPP_NET_EVENT_H_
