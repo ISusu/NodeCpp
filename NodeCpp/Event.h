@@ -17,8 +17,8 @@
  *
  *****************************************************************************/
 
-#ifndef NODECPP_MUTEX_H_
-#define NODECPP_MUTEX_H_
+#ifndef NODECPP_EVENT_H_
+#define NODECPP_EVENT_H_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
@@ -27,40 +27,28 @@
 #include <NodeCpp/Macros.h>
 #include <NodeCpp/Platform.h>
 #if defined(PLATFORM_WINDOWS)
-#include <NodeCpp/Mutex_WIN32.h>
+#include <NodeCpp/Event_WIN32.h>
 #elif defined(PLATFORM_LINUX)
-#include <NodeCpp/Mutex_POSIX.h>
+#include <NodeCpp/Event_POSIX.h>
 #endif
 
 namespace NodeCpp
 {
-    class NullMutex
+    class Event : private EventImpl
     {
     public:
-        NullMutex(void) {}
-        ~NullMutex(void) {}
+        Event(bool _autoReset = true, bool _initState = false)
+            : EventImpl(_autoReset, _initState) {}
+        ~Event(void) {}
 
-        void lock(void) {}
-        void unlock(void) {}
-        void tryLock(void) {}
-
-    private:
-        DISALLOW_COPY_AND_ASSIGN(NullMutex);
-    };
-
-    class Mutex : private MutexImpl
-    {
-    public:
-        Mutex(void) {}
-        ~Mutex(void) {}
-
-        void lock(void) { lockImpl(); }
-        void unlock(void) { unlockImpl(); }
-        void tryLock(void) { tryLockImpl(); }
+        void set(void) { setImpl(); }
+        void reset(void) { resetImpl(); }
+        void wait(void) { waitImpl(); }
+        void wait(long _milliseconds) { waitImpl(_milliseconds); }
 
     private:
-        DISALLOW_COPY_AND_ASSIGN(Mutex);
+        DISALLOW_COPY_AND_ASSIGN(Event);
     };
 }
 
-#endif // NODECPP_MUTEX_H_
+#endif // NODECPP_EVENT_H_

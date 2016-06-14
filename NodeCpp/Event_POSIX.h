@@ -17,50 +17,15 @@
  *
  *****************************************************************************/
 
-#ifndef NODECPP_MUTEX_H_
-#define NODECPP_MUTEX_H_
+#ifndef NODECPP_EVENT_POSIX_H_
+#define NODECPP_EVENT_POSIX_H_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
 #endif
 
-#include <NodeCpp/Macros.h>
-#include <NodeCpp/Platform.h>
-#if defined(PLATFORM_WINDOWS)
-#include <NodeCpp/Mutex_WIN32.h>
-#elif defined(PLATFORM_LINUX)
-#include <NodeCpp/Mutex_POSIX.h>
-#endif
 
-namespace NodeCpp
-{
-    class NullMutex
-    {
-    public:
-        NullMutex(void) {}
-        ~NullMutex(void) {}
 
-        void lock(void) {}
-        void unlock(void) {}
-        void tryLock(void) {}
 
-    private:
-        DISALLOW_COPY_AND_ASSIGN(NullMutex);
-    };
 
-    class Mutex : private MutexImpl
-    {
-    public:
-        Mutex(void) {}
-        ~Mutex(void) {}
-
-        void lock(void) { lockImpl(); }
-        void unlock(void) { unlockImpl(); }
-        void tryLock(void) { tryLockImpl(); }
-
-    private:
-        DISALLOW_COPY_AND_ASSIGN(Mutex);
-    };
-}
-
-#endif // NODECPP_MUTEX_H_
+#endif // NODECPP_EVENT_POSIX_H_

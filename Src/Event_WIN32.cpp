@@ -17,50 +17,27 @@
  *
  *****************************************************************************/
 
-#ifndef NODECPP_MUTEX_H_
-#define NODECPP_MUTEX_H_
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-# pragma once
-#endif
-
-#include <NodeCpp/Macros.h>
-#include <NodeCpp/Platform.h>
-#if defined(PLATFORM_WINDOWS)
-#include <NodeCpp/Mutex_WIN32.h>
-#elif defined(PLATFORM_LINUX)
-#include <NodeCpp/Mutex_POSIX.h>
-#endif
+#include "NodeCpp/Event_WIN32.h"
+#include <stdexcept>
 
 namespace NodeCpp
 {
-    class NullMutex
+    EventImpl::EventImpl(bool _autoReset, bool _initState)
+        : event_(NULL)
     {
-    public:
-        NullMutex(void) {}
-        ~NullMutex(void) {}
+        event_ = CreateEventA(NULL,
+            _autoReset ? FALSE : TRUE,
+            _initState ? TRUE : FALSE,
+            NULL);
+        if (event_ == NULL) {
+            std::runtime_error("Failed create event.");
+        }
+    }
 
-        void lock(void) {}
-        void unlock(void) {}
-        void tryLock(void) {}
-
-    private:
-        DISALLOW_COPY_AND_ASSIGN(NullMutex);
-    };
-
-    class Mutex : private MutexImpl
+    EventImpl::~EventImpl(void)
     {
-    public:
-        Mutex(void) {}
-        ~Mutex(void) {}
-
-        void lock(void) { lockImpl(); }
-        void unlock(void) { unlockImpl(); }
-        void tryLock(void) { tryLockImpl(); }
-
-    private:
-        DISALLOW_COPY_AND_ASSIGN(Mutex);
-    };
+        if (event_ != NULL) {
+            CloseHandle(event_);
+        }
+    }
 }
-
-#endif // NODECPP_MUTEX_H_

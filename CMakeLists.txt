@@ -62,11 +62,14 @@ set(NodeCpp_Base_SRC
   NodeCpp/LockGuard.h
   NodeCpp/Mutex.h
   NodeCpp/Mutex_${SRC_PLAT}.h
+  NodeCpp/Event.h
+  NodeCpp/Event_${SRC_PLAT}.h
   
   Src/ByteBuffer.cpp
   Src/String.cpp
   Src/Random.cpp
   Src/Mutex_${SRC_PLAT}.cpp
+  Src/Event_${SRC_PLAT}.cpp
 )
 
 set(NodeCpp_Util_SRC

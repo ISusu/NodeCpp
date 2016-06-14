@@ -17,50 +17,56 @@
  *
  *****************************************************************************/
 
-#ifndef NODECPP_MUTEX_H_
-#define NODECPP_MUTEX_H_
+#ifndef NODECPP_EVENT_WIN32_H_
+#define NODECPP_EVENT_WIN32_H_
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once
 #endif
 
-#include <NodeCpp/Macros.h>
-#include <NodeCpp/Platform.h>
-#if defined(PLATFORM_WINDOWS)
-#include <NodeCpp/Mutex_WIN32.h>
-#elif defined(PLATFORM_LINUX)
-#include <NodeCpp/Mutex_POSIX.h>
-#endif
+#include <stdexcept>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 namespace NodeCpp
 {
-    class NullMutex
+    class EventImpl
     {
     public:
-        NullMutex(void) {}
-        ~NullMutex(void) {}
+        EventImpl(bool _autoReset, bool _initState);
+        ~EventImpl(void);
 
-        void lock(void) {}
-        void unlock(void) {}
-        void tryLock(void) {}
+        void setImpl(void)
+        {
+            if (!SetEvent(event_)) {
+                throw std::runtime_error("Failed set event.");
+            }
+        }
+
+        void resetImpl(void)
+        {
+            if (!ResetEvent(event_)) {
+                throw std::runtime_error("Failed reset event.");
+            }
+        }
+
+        void waitImpl(void)
+        {
+            if (WaitForSingleObject(event_, INFINITE) == WAIT_FAILED) {
+                throw std::runtime_error("Failed wait event.");
+            }
+        }
+
+        void waitImpl(long _milliseconds)
+        {
+            if (WaitForSingleObject(event_, (DWORD)_milliseconds) == WAIT_FAILED) {
+                throw std::runtime_error("Failed wait event.");
+            }
+        }
 
     private:
-        DISALLOW_COPY_AND_ASSIGN(NullMutex);
-    };
-
-    class Mutex : private MutexImpl
-    {
-    public:
-        Mutex(void) {}
-        ~Mutex(void) {}
-
-        void lock(void) { lockImpl(); }
-        void unlock(void) { unlockImpl(); }
-        void tryLock(void) { tryLockImpl(); }
-
-    private:
-        DISALLOW_COPY_AND_ASSIGN(Mutex);
+        HANDLE event_;
     };
 }
 
-#endif // NODECPP_MUTEX_H_
+#endif // NODECPP_EVENT_WIN32_H_
