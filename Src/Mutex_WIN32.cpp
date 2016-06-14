@@ -17,6 +17,15 @@
  *
  *****************************************************************************/
 
+#include "NodeCpp/Mutex_WIN32.h"
 
+namespace NodeCpp
+{
+    MutexImpl::MutexImpl(void) {
+        InitializeCriticalSectionAndSpinCount(&cs_, 4000);
+    }
 
-
+    MutexImpl::~MutexImpl(void) {
+        DeleteCriticalSection(&cs_);
+    }
+}

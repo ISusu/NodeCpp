@@ -24,6 +24,7 @@
 # pragma once
 #endif
 
+#include <NodeCpp/Macros.h>
 #include <NodeCpp/Platform.h>
 #if defined(PLATFORM_WINDOWS)
 #include <NodeCpp/Mutex_WIN32.h>
@@ -33,15 +34,32 @@
 
 namespace NodeCpp
 {
-    class Mutex
+    class NullMutex
     {
     public:
-        Mutex(void);
-        ~Mutex(void);
+        NullMutex(void) {}
+        ~NullMutex(void) {}
 
-        void lock(void);
-        void unlock(void);
-        void tryLock(void);
+        void lock(void) {}
+        void unlock(void) {}
+        void tryLock(void) {}
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(NullMutex);
+    };
+
+    class Mutex : private MutexImpl
+    {
+    public:
+        Mutex(void) {}
+        ~Mutex(void) {}
+
+        void lock(void) { lockImpl(); }
+        void unlock(void) { unlockImpl(); }
+        void tryLock(void) { tryLockImpl(); }
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(Mutex);
     };
 }
 

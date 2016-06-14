@@ -24,8 +24,24 @@
 # pragma once
 #endif
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
+namespace NodeCpp
+{
+    class MutexImpl
+    {
+    public:
+        MutexImpl(void);
+        ~MutexImpl(void);
 
+        void lockImpl(void) { EnterCriticalSection(&cs_); }
+        bool tryLockImpl(void) { return TryEnterCriticalSection(&cs_) != FALSE; }
+        void unlockImpl(void) { LeaveCriticalSection(&cs_); }
 
+    private:
+        CRITICAL_SECTION cs_;
+    };
+}
 
 #endif // NODECPP_MUTEX_WIN32_H_

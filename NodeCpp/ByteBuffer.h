@@ -63,12 +63,23 @@ namespace NodeCpp
 
         size_type size(void) const;
         void resize(size_type);
+
+        const std::uint8_t* rptr(size_type) const;
+        std::uint8_t* wptr(size_type);
+
         size_type rpos(void) const;
-        size_type wpos(void) const;
         void rpos(size_type);
+
+        size_type wpos(void) const;
         void wpos(size_type);
-        const std::uint8_t* contents(void) const;
-        std::uint8_t* contents(size_type);
+
+        void append(const std::uint8_t*, size_type);
+        void append(const ByteBuffer&);
+
+        void read(std::uint8_t*, size_type);
+        template<typename T> T read(void);
+
+        void put(size_type, const std::uint8_t*, size_type);
 
         Self& operator>>(std::uint8_t&);
         Self& operator>>(std::int8_t&);
@@ -94,21 +105,10 @@ namespace NodeCpp
         Self& operator<<(const float&);
         Self& operator<<(const double&);
 
-        void append(const std::uint8_t*, size_type);
-        void append(const ByteBuffer&);
-
-        void read(std::uint8_t*, size_type);
-        template<typename T>
-        T read(void);
-
-        void put(size_type, const std::uint8_t*, size_type);
     private:
-        template<typename T>
-        void append(const T&);
-        template<typename T>
-        T read(size_type);
-        template<typename T>
-        void put(size_type, T&);
+        template<typename T> void _append(const T&);
+        template<typename T> T _read(size_type);
+        template<typename T> void _put(size_type, T&);
 
         size_type rpos_;
         size_type wpos_;
