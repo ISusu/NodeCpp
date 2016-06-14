@@ -78,10 +78,28 @@ set(NodeCpp_Util_SRC
   Src/Util/IniConfiguration.cpp
 )
 
+set(NodeCpp_Net_SRC
+  NodeCpp/Net/Event.h
+  NodeCpp/Net/EventLoop.h
+  NodeCpp/Net/Reactor.h
+  
+  Src/Net/Event.cpp
+  Src/Net/EventLoop.cpp
+)
+if (WIN32)
+set(NodeCpp_Net_SRC
+  NodeCpp/Net/ReactorSelect_WIN32.h
+  Src/Net/ReactorSelect_WIN32.cpp
+  ${NodeCpp_Net_SRC}
+)
+endif()
+
+
 if (WIN32)
   source_group("OS" FILES ${NodeCpp_OS_SRC})
   source_group("Base" FILES ${NodeCpp_Base_SRC})
   source_group("Util" FILES ${NodeCpp_Util_SRC})
+  source_group("Net" FILES ${NodeCpp_Net_SRC})
 endif()
 
 #------------------------------------------------------------------------------
@@ -90,4 +108,5 @@ add_library(NodeCpp STATIC
   ${NodeCpp_OS_SRC}
   ${NodeCpp_Base_SRC}
   ${NodeCpp_Util_SRC}
+  ${NodeCpp_Net_SRC}
 )
