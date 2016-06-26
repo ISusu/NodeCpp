@@ -18,6 +18,7 @@
  *****************************************************************************/
 
 #include "NodeCpp/ByteBuffer.h"
+#include <cstring>
 #include "NodeCpp/OS/String.h"
 
 namespace NodeCpp
@@ -26,8 +27,13 @@ namespace NodeCpp
         std::size_t _opSize, std::size_t _bufSize)
     {
         NodeCpp_OS::snprintf(message_, EXCEP_BUFF_SIZE, 
-            "Try %s %d bytes at pos(%d), buffer size(%d)\n", 
+            "Try %s %d bytes at pos(%d), buffer size(%d)", 
             _add ? "add" : "read", _opSize, _pos, _bufSize);
+    }
+
+    ByteBufferException::ByteBufferException(const ByteBufferException& _excep)
+    {
+        memcpy(&message_[0], &_excep.message_[0], EXCEP_BUFF_SIZE);
     }
 
     ByteBufferException::~ByteBufferException(void)
@@ -38,17 +44,17 @@ namespace NodeCpp
     ByteBuffer::ByteBuffer(void)
         : rpos_(0)
         , wpos_(0)
-        , storage_(DEFAULT_SIZE)
+        , storage_()
     {
-
+        storage_.reserve(DEFAULT_SIZE);
     }
 
     ByteBuffer::ByteBuffer(size_type _res)
         : rpos_(0)
         , wpos_(0)
-        , storage_(_res)
+        , storage_()
     {
-
+        storage_.reserve(_res);
     }
 
     ByteBuffer::ByteBuffer(const ByteBuffer& _buf)

@@ -37,6 +37,7 @@ namespace NodeCpp
     public:
         ByteBufferException(bool _add, std::size_t _pos, 
             std::size_t _opSize, std::size_t _bufSize);
+        ByteBufferException(const ByteBufferException& _excep);
         ~ByteBufferException(void);
         const char* what(void) const throw();
 
@@ -101,13 +102,13 @@ namespace NodeCpp
         T read(void);
 
         void put(size_type, const std::uint8_t*, size_type);
-        template<typename T>
-        void put(size_type, const T&);
     private:
         template<typename T>
         void append(const T&);
         template<typename T>
         T read(size_type);
+        template<typename T>
+        void put(size_type, T&);
 
         size_type rpos_;
         size_type wpos_;

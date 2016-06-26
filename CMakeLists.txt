@@ -48,6 +48,7 @@ set(NodeCpp_OS_SRC
 set(NodeCpp_Base_SRC
   NodeCpp/Macros.h
   NodeCpp/Platform.h
+  NodeCpp/ByteConverter.h
   NodeCpp/ByteBuffer.h
   NodeCpp/ByteBuffer.inl
   

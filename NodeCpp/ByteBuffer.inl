@@ -27,6 +27,7 @@
 #include <NodeCpp/ByteBuffer.h>
 #include <cassert>
 #include <cstring>
+#include <NodeCpp/ByteConverter.h>
 
 namespace NodeCpp
 {
@@ -269,15 +270,11 @@ namespace NodeCpp
     }
 
     template<typename T>
-    inline void ByteBuffer::put(ByteBuffer::size_type _pos, const T& _v)
-    {
-        put(_pos, (const std::uint8_t*)&_v, sizeof(T));
-    }
-
-    template<typename T>
     inline void ByteBuffer::append(const T& _v)
     {
-        append((const std::uint8_t*)&_v, sizeof(T));
+        T _val = _v;
+        ByteConverter::endianConvert(_val);
+        append((const std::uint8_t*)&_val, sizeof(T));
     }
 
     template<typename T>
@@ -287,7 +284,21 @@ namespace NodeCpp
             throw ByteBufferException(false, _pos, sizeof(T), size());
         }
         T _ret = *((T const*)&storage_[_pos]);
+        ByteConverter::endianConvert(_ret);
         return _ret;
+    }
+
+    template<typename T>
+    inline void ByteBuffer::put(ByteBuffer::size_type _pos, T& _v)
+    {
+        ByteConverter::endianConvert(_v);
+        put(_pos, (const std::uint8_t*)&_v, sizeof(T));
+    }
+
+    template<>
+    inline void ByteBuffer::put(ByteBuffer::size_type, std::string&)
+    {
+        assert(false);
     }
 }
 
