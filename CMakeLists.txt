@@ -53,13 +53,22 @@ set(NodeCpp_Base_SRC
   NodeCpp/ByteBuffer.inl
   NodeCpp/Configuration.h
   NodeCpp/Configuration.inl
+  NodeCpp/String.h
   
   Src/ByteBuffer.cpp
+  Src/String.cpp
+)
+
+set(NodeCpp_Util_SRC
+  NodeCpp/Util/IniConfiguration.h
+  
+  Src/Util/IniConfiguration.cpp
 )
 
 if (WIN32)
   source_group("OS" FILES ${NodeCpp_OS_SRC})
   source_group("Base" FILES ${NodeCpp_Base_SRC})
+  source_group("Util" FILES ${NodeCpp_Util_SRC})
 endif()
 
 #------------------------------------------------------------------------------
@@ -67,4 +76,5 @@ endif()
 add_library(NodeCpp STATIC
   ${NodeCpp_OS_SRC}
   ${NodeCpp_Base_SRC}
+  ${NodeCpp_Util_SRC}
 )

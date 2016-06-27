@@ -40,7 +40,7 @@ namespace NodeCpp
         return NULL;
     }
 
-    inline const Configuration::Any& Configuration::operator[](const std::string& _key) const {
+    inline const Configuration::Any& Configuration::Any::operator[](const std::string& _key) const {
         const Any* _any = get(_key);
         if (_any != NULL) {
             return *_any;
@@ -66,7 +66,7 @@ namespace NodeCpp
         return errorString_;
     }
 
-    template<typename T> inline T _cast(const struct Configuration::Any* _Any) 
+    template<typename T> inline T _cast(const Configuration::Any* _Any) 
     { return static_cast<T>(atol(_Any->Value.c_str())); }
 
     template<> inline std::int8_t Configuration::Any::as(void) const { return _cast<std::int8_t>(this); }
@@ -78,7 +78,7 @@ namespace NodeCpp
     template<> inline std::int64_t Configuration::Any::as(void) const {
 #if defined(PLATFORM_WINDOWS)
         std::int64_t _value = 0;
-        if (!Value_ || sscanf_s(Value_, "%I64ld", &_value) == -1) {
+        if (Value.empty() || sscanf_s(Value.c_str(), "%I64ld", &_value) == -1) {
             return 0;
         }
         return _value;
@@ -89,7 +89,7 @@ namespace NodeCpp
     template<> inline std::uint64_t Configuration::Any::as(void) const {
 #if defined(PLATFORM_WINDOWS)
         std::int64_t _value = 0;
-        if (!Value_ || sscanf_s(Value_, "%I64lu", &_value) == -1) {
+        if (Value.empty() || sscanf_s(Value.c_str(), "%I64lu", &_value) == -1) {
             return 0;
         }
         return _value;

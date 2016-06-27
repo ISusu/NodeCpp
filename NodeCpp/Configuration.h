@@ -44,8 +44,8 @@ namespace NodeCpp
             std::string Value;
             ValueMap Map;
 
-            const struct _Any* get(const std::string& _key) const;
-            const struct _Any& operator[](const std::string& _key) const;
+            const struct _Any* get(const std::string&) const;
+            const struct _Any& operator[](const std::string&) const;
 
             template<typename T>
             T as(void) const;
@@ -56,9 +56,9 @@ namespace NodeCpp
         ~Configuration(void){}
 
         virtual bool open(const std::string&) = 0;
-        virtual const Any* get(const std::string& _key) const = 0;
+        virtual const Any* get(const std::string&) const = 0;
 
-        const Any& operator[](const std::string& _key) const;
+        const Any& operator[](const std::string&) const;
         const std::string& errorString(void) const;
 
     protected:
