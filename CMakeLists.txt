@@ -39,8 +39,10 @@ elseif (UNIX)
 endif()
 
 set(NodeCpp_OS_SRC
+  NodeCpp/OS/MiniDump.h
   NodeCpp/OS/String.h
   
+  Src/OS/MiniDump_${SRC_PLAT}.cpp
   Src/OS/String.cpp
   Src/OS/String_${SRC_PLAT}.cpp
 )

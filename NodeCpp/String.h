@@ -28,7 +28,7 @@
 
 namespace NodeCpp
 {
-    void TrimString(std::string& _src, const std::string &_trim);
+    void trimString(std::string& _src, const std::string &_trim);
 }
 
 #endif // NODECPP_STRING_H_

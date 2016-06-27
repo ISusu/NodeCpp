@@ -97,7 +97,7 @@ namespace NodeCpp
 
                 secName_.clear();
                 secName_.append(_line, 1, _pos - 1);
-                TrimString(secName_, " ");
+                trimString(secName_, " ");
 
                 Configuration::Any _section;
                 _section.Key = secName_;
@@ -110,8 +110,8 @@ namespace NodeCpp
                 Configuration::Any _kv;
                 _kv.Key.append(_line, 0, _pos);
                 _kv.Value.append(_line, _pos + 1, _line.length());
-                TrimString(_kv.Key, " ");
-                TrimString(_kv.Value, " ");
+                trimString(_kv.Key, " ");
+                trimString(_kv.Value, " ");
 
                 if (secName_.empty()) {
                     secName_ = "__default";

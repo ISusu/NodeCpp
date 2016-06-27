@@ -17,13 +17,28 @@
  *
  *****************************************************************************/
 
-#include "NodeCpp/String.h"
+#ifndef NODECPP_OS_MINIDUMP_H_
+#define NODECPP_OS_MINIDUMP_H_
 
-namespace NodeCpp
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+# pragma once
+#endif
+
+#include <NodeCpp/Macros.h>
+
+namespace NodeCpp_OS
 {
-    void trimString(std::string& _src, const std::string &_trim)
+    class MiniDump
     {
-        _src.erase(0, _src.find_first_not_of(_trim));
-        _src.erase(_src.find_last_not_of(_trim) + 1);
-    }
+    public:
+        static void begin(void);
+        static void end(void);
+
+    private:
+        MiniDump(void);
+        ~MiniDump(void);
+        DISALLOW_COPY_AND_ASSIGN(MiniDump);
+    };
 }
+
+#endif // NODECPP_OS_MINIDUMP_H_
