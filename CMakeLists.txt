@@ -51,6 +51,8 @@ set(NodeCpp_Base_SRC
   NodeCpp/ByteConverter.h
   NodeCpp/ByteBuffer.h
   NodeCpp/ByteBuffer.inl
+  NodeCpp/Configuration.h
+  NodeCpp/Configuration.inl
   
   Src/ByteBuffer.cpp
 )
