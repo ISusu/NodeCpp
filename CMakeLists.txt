@@ -40,6 +40,7 @@ endif()
 
 set(NodeCpp_OS_SRC
   NodeCpp/OS/MiniDump.h
+  NodeCpp/OS/MemoryLeak.h
   NodeCpp/OS/String.h
   
   Src/OS/MiniDump_${SRC_PLAT}.cpp
