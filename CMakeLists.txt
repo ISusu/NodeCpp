@@ -57,9 +57,11 @@ set(NodeCpp_Base_SRC
   NodeCpp/Configuration.h
   NodeCpp/Configuration.inl
   NodeCpp/String.h
+  NodeCpp/Random.h
   
   Src/ByteBuffer.cpp
   Src/String.cpp
+  Src/Random.cpp
 )
 
 set(NodeCpp_Util_SRC
