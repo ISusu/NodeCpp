@@ -58,10 +58,15 @@ set(NodeCpp_Base_SRC
   NodeCpp/Configuration.inl
   NodeCpp/String.h
   NodeCpp/Random.h
+  NodeCpp/LockedQueue.h
+  NodeCpp/LockGuard.h
+  NodeCpp/Mutex.h
+  NodeCpp/Mutex_${SRC_PLAT}.h
   
   Src/ByteBuffer.cpp
   Src/String.cpp
   Src/Random.cpp
+  Src/Mutex_${SRC_PLAT}.cpp
 )
 
 set(NodeCpp_Util_SRC
